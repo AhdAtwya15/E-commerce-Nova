@@ -266,9 +266,9 @@ useEffect(() => {
           whileHover={{ scale: 1.05, rotate: 5 }}
         >
           <motion.img
-            src="/src/assets/logo.png"
+            src="https://res.cloudinary.com/df2nbeovz/logo_j2rnop"
             className="h-10 w-auto cursor-pointer"
-            alt="Logo"
+            alt="Nova Logo"
             onClick={() => navigate("/")}
             transition={{ duration: 0.2 }}
           />

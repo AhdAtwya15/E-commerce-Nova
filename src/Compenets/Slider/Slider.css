@@ -1,0 +1,37 @@
+.slider-container .slick-dots {
+  bottom: -37px;
+}
+
+.slider-container .slick-dots li button:before {
+  font-size: 10px;
+  color: #3B8D90;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.slider-container .slick-dots li:nth-child(odd) button:before {
+  color: #3B8D90;
+}
+
+.slider-container .slick-dots li:nth-child(even) button:before {
+  color: #E8765E;
+}
+
+.slider-container .slick-dots li:nth-child(odd).slick-active button:before {
+  color: #2A6B6E;
+  opacity: 1;
+  transform: scale(1.2);
+  /* text-shadow: 0 0 6px rgba(43, 141, 144, 0.6); */
+}
+
+.slider-container .slick-dots li:nth-child(even).slick-active button:before {
+  color: #D65A3A;
+  opacity: 1;
+  transform: scale(1.2);
+  /* text-shadow: 0 0 6px rgba(232, 118, 94, 0.6); */
+}
+
+.slider-container .slick-dots li button:hover:before {
+  opacity: 1;
+}
+

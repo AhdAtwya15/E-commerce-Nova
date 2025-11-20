@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'Roobert PRO';
+    src: url('RoobertPRO-Regular.woff2') format('woff2'),
+        url('RoobertPRO-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roobert PRO';
+    src: url('RoobertPRO-Bold.woff2') format('woff2'),
+        url('RoobertPRO-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roobert PRO';
+    src: url('RoobertPRO-Medium.woff2') format('woff2'),
+        url('RoobertPRO-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roobert PRO';
+    src: url('RoobertPRO-Light.woff2') format('woff2'),
+        url('RoobertPRO-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+

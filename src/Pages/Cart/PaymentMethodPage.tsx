@@ -125,13 +125,11 @@ const PaymentMethodPage = () => {
       dispatch(cartApi.util.invalidateTags(["CartProducts"]));
        console.log("Checkout response:", res);
     
-      
-              if (res?.session?.url) {
-          window.location.href = res.session.url;
-        } else {
-          notify("Payment session URL not found", "error");
-        }
-
+       if (res?.session?.url) {
+    window.location.href = res.session.url; 
+  } else {
+    notify("Payment session URL not found", "error");
+  }
 
    
       
@@ -142,7 +140,7 @@ const PaymentMethodPage = () => {
       notify("Order placed successfully!", "success");
    
       
-      navigate("/success"); 
+      navigate(`/success/${cartId}`);
 
     }
       

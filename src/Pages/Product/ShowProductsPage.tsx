@@ -260,7 +260,7 @@ const ShowProductsPage = ({ isForAdmin = false }: IProps) => {
 
                 {pagination && pagination.numberOfPages > 1 && (
                   <Pagination
-                    currentPage={filterState.page}
+                    currentPage={pagination.currentPage}
                     totalPages={pagination.numberOfPages}
                     onPageChange={handlePageChange}
                     siblingCount={1}

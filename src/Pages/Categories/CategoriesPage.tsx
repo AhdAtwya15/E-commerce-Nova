@@ -16,7 +16,7 @@ const CategoriesPage = () => {
   const categories = data?.data ?? [];
 
   return (
-    <div className="min-h-screen bg-gray-50 font-roobert mt-3">
+    <div className="min-h-screen bg-gray-50 font-roobert ">
       <motion.div
         className="relative text-white py-20 px-4 overflow-hidden"
         animate={{

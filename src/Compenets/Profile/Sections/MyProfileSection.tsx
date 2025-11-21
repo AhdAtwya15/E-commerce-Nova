@@ -32,7 +32,7 @@ const MyProfileSection: React.FC = () => {
   return (
     <div
     
-      className="min-h-screen bg-gray-50 mt-3 py-12 px-4 font-roobert">
+      className="min-h-screen bg-gray-50 py-12 px-4 font-roobert">
       <div className="max-w-4xl  space-y-6">
         <ProfileHeader user={user!} />
 

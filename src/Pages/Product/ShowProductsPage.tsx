@@ -251,7 +251,7 @@ const ShowProductsPage = ({ isForAdmin = false }: IProps) => {
                           {...product}
                           index={index}
                           disableInitialAnimation={true}
-                          isAdmin={isForAdmin}
+                          
                         />
                       </motion.div>
                     ))}

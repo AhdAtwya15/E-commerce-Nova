@@ -10,23 +10,47 @@ function App() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("token");
-      dispatch(hydrateAuth(token));
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     const token = localStorage.getItem("token");
+  //     dispatch(hydrateAuth(token));
+  //   }
+  // }, [dispatch]);
 
   
+  // useEffect(() => {
+  //   const handleStorage = (e: StorageEvent) => {
+  //     if (e.key === "token") {
+  //       dispatch(hydrateAuth(e.newValue));
+  //     }
+  //   };
+  //   window.addEventListener("storage", handleStorage);
+  //   return () => window.removeEventListener("storage", handleStorage);
+  // }, [dispatch]);
+
   useEffect(() => {
-    const handleStorage = (e: StorageEvent) => {
-      if (e.key === "token") {
-        dispatch(hydrateAuth(e.newValue));
-      }
-    };
-    window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
-  }, [dispatch]);
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+    dispatch(hydrateAuth({ token, role }));
+  }
+}, [dispatch]);
+
+useEffect(() => {
+  const handleStorage = (e: StorageEvent) => {
+    if (e.key === "token" || e.key === "role") {
+      dispatch(
+        hydrateAuth({
+          token: localStorage.getItem("token"),
+          role: localStorage.getItem("role"),
+        })
+      );
+    }
+  };
+  window.addEventListener("storage", handleStorage);
+  return () => window.removeEventListener("storage", handleStorage);
+}, [dispatch]);
+
 
   return (
     <main>

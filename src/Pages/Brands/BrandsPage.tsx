@@ -13,7 +13,7 @@ const BrandsPage = () => {
 
   return (
     <div
-      className="min-h-screen font-roobert mt-3"
+      className="min-h-screen font-roobert "
       style={{
         background: "linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%)",
       }}

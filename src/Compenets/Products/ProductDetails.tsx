@@ -18,11 +18,12 @@ interface ProductDetailsProps {
   onAddToCart?: () => void; 
   categoryName?:string;
   brandName?:string;
+  isLoading:boolean
 
 
 }
 
-const ProductDetails = ({ product, onColorChange, onAddToCart,categoryName,brandName }: ProductDetailsProps) => {
+const ProductDetails = ({ product, onColorChange, onAddToCart,categoryName,brandName,isLoading }: ProductDetailsProps) => {
   const token = useSelector((state: RootState) => state.auth.token);
   const isHydrated = useSelector((state: RootState) => state.auth.isHydrated);
   const [selectedImage, setSelectedImage] = useState(0);
@@ -33,6 +34,8 @@ const ProductDetails = ({ product, onColorChange, onAddToCart,categoryName,brand
   const [addToWishlist] = useAddProductToWishlistMutation();
   const [deleteFromWishlist] = useDeletWishlistProductMutation();
   const navigate=useNavigate()
+  const role = useSelector((state: RootState) => state.auth.role);
+
 
   
 
@@ -344,12 +347,14 @@ const ProductDetails = ({ product, onColorChange, onAddToCart,categoryName,brand
           </motion.div>
         )}
 
-        <motion.div variants={fadeInUp} className="flex gap-3 sm:gap-4">
+        { role !== "admin" &&(
+          <motion.div variants={fadeInUp} className="flex gap-3 sm:gap-4">
           <Button
             variant="addBtn"
             size="lg"
             onClick={handleAddToCart}
             className="flex-1"
+            isLoading={isLoading}
           >
             <div className="flex gap-2 sm:gap-3 items-center">
               <FaShoppingCart />
@@ -371,6 +376,9 @@ const ProductDetails = ({ product, onColorChange, onAddToCart,categoryName,brand
           </motion.button>
         </motion.div>
 
+        )
+
+        }
         <motion.div 
           variants={fadeInUp}
           className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-4 lg:pt-6 mt-4 lg:mt-6 border-t border-gray-200"

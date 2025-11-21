@@ -38,7 +38,7 @@ const AddressCard = ({ address, onEdit }: AddressCardProps) => {
     <>
       <motion.div
         key={address._id}
-        className="relative rounded-2xl border-2 p-6 overflow-hidden "
+        className="relative rounded-2xl border-2 p-5 overflow-hidden "
         style={{
           borderColor: tealColor,
           background: 'linear-gradient(to right, #ffffff, rgba(204, 251, 241, 0.3), #ffffff)'
@@ -136,9 +136,9 @@ const AddressCard = ({ address, onEdit }: AddressCardProps) => {
               <div className="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center shrink-0">
                 <FaMapMarkerAlt className="text-teal-600" size={16} />
               </div>
-              <div className="min-w-0 flex gap-2 justify-center items-center">
+              <div className="min-w-0 flex  gap-2 justify-center items-center">
                 <p className="text-xs whitespace-nowrap text-gray-500 font-medium ">Details : </p>
-                <p className="text-sm text-gray-700  font-medium">{address.details}</p>
+                <p className="text-sm text-gray-700 font-medium break-words line-clamp-2">{address.details}</p>
               </div>
             </motion.div>
             <motion.div 

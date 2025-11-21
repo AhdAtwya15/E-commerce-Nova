@@ -20,7 +20,7 @@ const AboutPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white font-roobert mt-3">
+    <div className="min-h-screen bg-white font-roobert ">
   
       <motion.section
         className="relative text-white py-32 px-4 overflow-hidden"
@@ -85,8 +85,8 @@ const AboutPage = () => {
             <h2 className="text-5xl md:text-6xl font-bold mb-6" style={{ color: '#3B8D90' }}>
               Our Story
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Founded in 2020, Nova emerged from a vision to democratize fashion, making high-quality, trendy clothing accessible to everyone worldwide.
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Founded in 2025, Nova emerged from a vision to democratize fashion, making high-quality, trendy clothing accessible to everyone worldwide.
             </p>
           </motion.div>
 
@@ -118,7 +118,7 @@ const AboutPage = () => {
               <div className="space-y-6">
                 <div className="flex justify-between items-center pb-6 border-b border-gray-200">
                   <span className="text-gray-600 text-lg">Founded</span>
-                  <span className="font-bold text-2xl" style={{ color: '#3B8D90' }}>2020</span>
+                  <span className="font-bold text-2xl" style={{ color: '#3B8D90' }}>2025</span>
                 </div>
                 <div className="flex justify-between items-center pb-6 border-b border-gray-200">
                   <span className="text-gray-600 text-lg">Global Customers</span>

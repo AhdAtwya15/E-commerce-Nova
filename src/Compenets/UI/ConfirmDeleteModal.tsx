@@ -14,7 +14,7 @@ const ConfirmDeleteModal = ({ isOpen, title, onConfirm, onClose,isLoading=false 
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex justify-center items-center bg-black/50"
+      className="fixed inset-0 z-[9999] flex justify-center items-center bg-black/50 "
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -23,7 +23,7 @@ const ConfirmDeleteModal = ({ isOpen, title, onConfirm, onClose,isLoading=false 
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.3 }}
-        className="bg-white rounded-2xl shadow-lg p-10 w-full max-w-md text-center relative"
+        className="bg-white rounded-2xl shadow-lg p-10 w-[90%] max-w-md text-center relative"
       >
         <button
           type="button"
@@ -48,7 +48,7 @@ const ConfirmDeleteModal = ({ isOpen, title, onConfirm, onClose,isLoading=false 
           <span className="sr-only">Close modal</span>
         </button>
 
-        <h3 className="mb-5 text-lg font-semibold text-gray-800 whitespace-nowrap">
+        <h3 className="mb-5 text-sm sm:!text-lg font-semibold text-gray-800 whitespace-nowrap">
           Are you sure you want to delete this {title} ? 
         </h3>
 

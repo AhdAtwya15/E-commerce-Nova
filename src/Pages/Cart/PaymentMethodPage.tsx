@@ -13,6 +13,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import type { IAddress } from "../../Interfaces";
 import { FaCreditCard, FaMoneyBillWave, FaMapMarkerAlt, FaArrowLeft, FaPlus } from "react-icons/fa";
 import useNotification from "../../hook/useNotification";
+import { useDispatch } from "react-redux";
+import { cartApi, useGetCartProductQuery } from "../../app/Features/cartApi";
 
 interface IAddressForm {
   alias: string;
@@ -32,8 +34,17 @@ const PaymentMethodPage = () => {
   const hasAddresses = addresses.length > 0;
   const [addAddress, { isLoading: isAddingAddress }] = useAddAddressMutation();
   const [createOrder, { isLoading: isCreatingOrder }] = useCreateCashOrderMutation();
-  const [createCheckout] = useCreateCheckoutSessionMutation()
+  const [createCheckout,{isLoading:isCreatingCheckout}] = useCreateCheckoutSessionMutation()
   const notify = useNotification
+  const dispatch = useDispatch();
+  const {data:cartData}=useGetCartProductQuery({})
+  const totalAfterDisc= cartData?.data.totalAfterDiscount||0
+  const totalCart=cartData?.data.totalCartPrice||0
+
+  const total = totalAfterDisc && totalAfterDisc > 0 ? totalAfterDisc : totalCart;
+
+ 
+  const MIN_PRICE_FOR_VISA = 30;
   
   const {
     register,
@@ -102,25 +113,50 @@ const PaymentMethodPage = () => {
       };
 
        if (paymentMethod === 'visa') {
+
+         if (total < MIN_PRICE_FOR_VISA) {
+      notify(
+        `Sorry, the total amount is too small for card payment. Minimum is $${MIN_PRICE_FOR_VISA} .`,
+        "warning"
+      );
+      return;
+    }
       const res =await createCheckout({ id: cartId!, data: { shippingAddress } }).unwrap();
+      dispatch(cartApi.util.invalidateTags(["CartProducts"]));
+       console.log("Checkout response:", res);
     
       
-      window.location.href = res.session.url;
+              if (res?.session?.url) {
+          window.location.href = res.session.url;
+        } else {
+          notify("Payment session URL not found", "error");
+        }
+
 
    
       
     }
     else{
       await createOrder({ id: cartId!, data: { shippingAddress } }).unwrap();
+       dispatch(cartApi.util.resetApiState());
       notify("Order placed successfully!", "success");
+   
+      
       navigate("/success"); 
 
     }
       
-    } catch  {
-      notify("Failed to place order","error")  
-  
-} 
+    } catch (error) {
+      console.error("Order placement error:", error);
+      
+      // معالجة أفضل للأخطاء
+      if (error && typeof error === "object" && "data" in error) {
+        const err = error as { data?: { message?: string } };
+        notify(err.data?.message || "Failed to place order", "error");
+      } else {
+        notify("Failed to place order", "error");
+      }
+    } 
   };
 
   if (isLoadingAddresses) {
@@ -396,7 +432,8 @@ const PaymentMethodPage = () => {
                 size="lg"
                 className="w-full"
                 onClick={handlePlaceOrder}
-                isLoading={isCreatingOrder}
+                
+                isLoading={isCreatingOrder|| isCreatingCheckout}
               >
                 {paymentMethod === 'visa' ? 'Coming Soon' : 'Place Order'}
               </Button>

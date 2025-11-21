@@ -15,9 +15,10 @@ import type { RootState } from "../../app/store";
 import { preload } from "../../utilis/global-preload";
 
 
+
 interface ProductCardProps extends IProduct {
   index?: number
-  isAdmin?: boolean
+  
   disableInitialAnimation?: boolean 
   onAddToCart?: (productId: string) => void
 }
@@ -31,7 +32,7 @@ const ProductCard = ({
   description,
   ratingsQuantity,
   index = 0,
-  isAdmin = false,
+
   disableInitialAnimation = false ,
   onAddToCart = () => {}
 }: ProductCardProps) => {
@@ -49,6 +50,12 @@ const ProductCard = ({
     skip: !token 
   });
   const wishlistItems = useMemo(() => data?.data ?? [], [data?.data]);
+
+
+
+const role = useSelector((state: RootState) => state.auth.role);
+
+
   
   
  
@@ -181,7 +188,7 @@ const ProductCard = ({
         <div 
           className="relative bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden flex-shrink-0"
           style={{
-           aspectRatio: isAdmin ? "8/9" : "4/5",
+           aspectRatio: role==="admin" ? "8/9" : "4/5",
 
             width: '100%'
           }}
@@ -209,7 +216,7 @@ const ProductCard = ({
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
 
-          {isAdmin && (
+          {role==="admin" && (
             <>
               <motion.button
                 initial={{ x: -100, opacity: 0 }}
@@ -251,7 +258,7 @@ const ProductCard = ({
             <span className="text-lg font-medium text-gray-700 line-clamp-1 flex-1">
               {title}
             </span>
-            {!isAdmin && (
+            {role !== "admin" && (
               <button
                 onClick={(e)=>{
                   e.stopPropagation()
@@ -309,7 +316,7 @@ const ProductCard = ({
             </motion.p>
           )}
 
-          {!isAdmin && (
+          {role !== "admin" && (
             <motion.div
               className="pt-2 mt-auto"
               initial={{ opacity: 0, x: isEven ? 50 : -50 }}

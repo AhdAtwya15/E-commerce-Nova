@@ -42,7 +42,7 @@ const ProductDetailsPage = () => {
   const { data: productsMayLike } = useGetProductsMayLikeQuery(catId ?? "");
   const productsLike = productsMayLike?.data;
 
-  const [addToCart] = useAddProductToCartMutation();
+  const [addToCart,{isLoading:isAddToCart}] = useAddProductToCartMutation();
 
   const handleAddToCart = async () => {
      if (!isHydrated) return;
@@ -71,7 +71,7 @@ const ProductDetailsPage = () => {
   const isLoading = isProductLoading || (productDetails && (isCatLoading || isBrandLoading));
 
   return (
-    <div className="min-h-screen mt-3" style={{ background: 'linear-gradient(to bottom right, #f9fafb, #ffffff)' }}>
+    <div className="min-h-screen " style={{ background: 'linear-gradient(to bottom right, #f9fafb, #ffffff)' }}>
       <div className="container-custom py-8">
         <motion.div
           className="mb-8"
@@ -104,6 +104,7 @@ const ProductDetailsPage = () => {
               brandName={brandName}
               onColorChange={setSelectedColor}
               onAddToCart={handleAddToCart}
+              isLoading={isAddToCart}
             />
             <RateContainer productId={productDetails._id} />
 

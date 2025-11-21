@@ -51,7 +51,9 @@ const Navbar = () => {
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
    const dropdownRef = useRef<HTMLDivElement>(null);
    const menuRef = useRef<HTMLDivElement>(null);
-   const serachRef = useRef<HTMLDivElement>(null);
+   const role = useSelector((state: RootState) => state.auth.role);
+
+   
   
   
 
@@ -69,12 +71,12 @@ const { data: wishlistData } = useGetWishlistProductsQuery({}, {
 
  
 const userData = token ? loggedInData?.data : null;
-const userRole = userData?.role;
+
 const userName = userData?.name;
 const wishlistLength = token ? (wishlistData?.data?.length || 0) : 0;
 
 const shouldFetchUserData =
-  !!token && userRole !== undefined && userRole === "user";
+  !!token && role !== undefined && role === "user";
 
 const { data: cartItems } = useGetCartProductQuery({}, {
   skip: !shouldFetchUserData,
@@ -104,87 +106,6 @@ useEffect(() => {
  
   
 
-//   const { data: loggedInData } = useGetUserDataQuery(token || '', { 
-//   skip: !token ,
-// });
-
-// const {data:wishlistData}=useGetWishlistProductsQuery({})
-
-//   const userData=loggedInData?.data
-
-//   const userRole = userData?.role;
-//   const userName = userData?.name;
-//   const wishlistLength = wishlistData?.data.length|| 0;
-  
-//   const shouldFetchUserData =
-//   !!token && userRole !== undefined && userRole === "user";
-//   const { data: cartItems } = useGetCartProductQuery({}, {
-//   skip: !shouldFetchUserData,
-// });
-// const cartProducts=cartItems?.data?.products??[]
-
-
-
-// // عدّل handleLogout بهذا الكود:
-// const handleLogout = () => {
-//   console.log('🔴 Starting Logout...');
-//   setIsDropdownOpen(false);
-  
-//   dispatch(logout());
-//   console.log('✅ Token cleared');
-  
-//   const result1 = dispatch(loggedUserApi.util.resetApiState());
-//   console.log('✅ loggedUserApi reset:', result1);
-  
-//   const result2 = dispatch(cartApi.util.resetApiState());
-//   console.log('✅ cartApi reset:', result2);
-  
-//   const result3 = dispatch(wishlistApi.util.resetApiState());
-//   console.log('✅ wishlistApi reset:', result3);
-  
-//   navigate("/login");
-//   console.log('✅ Navigated to login');
-// };
-
-// // أضف Effect جديد لتتبع البيانات:
-// useEffect(() => {
-//   console.log('📊 Current state:');
-//   console.log('   Token:', !!token);
-//   console.log('   User Role:', userRole);
-//   console.log('   Cart Products:', cartProducts);
-//   console.log('   Wishlist Length:', wishlistLength);
-//   console.log('   shouldFetchUserData:', shouldFetchUserData);
-// }, [token, userRole, cartProducts, wishlistLength, shouldFetchUserData]);
-  
-
-// // // أضف هذا Effect بعد باقي ال useEffect
-// // useEffect(() => {
-// //   // عند logout، حدث واجهة المستخدم بشكل فوري
-// //   if (!token) {
-// //     // إعادة تعيين الـ state
-// //     setSearchInput("");
-// //     setIsDropdownOpen(false);
-// //     setIsMenuOpen(false);
-// //   }
-// // }, [token]);
-
-// // // وعدّل الـ handleLogout ليكون كالتالي:
-// // const handleLogout = () => {
-// //   setIsDropdownOpen(false);
-  
-// //   // أولاً: امسح البيانات من الـ Redux store
-// //   dispatch(logout());
-  
-// //   // ثانياً: invalid tags لتنظيف الـ cache
-// //   dispatch(loggedUserApi.util.invalidateTags(['LoggedUser']));  
-// //   dispatch(cartApi.util.invalidateTags(['CartProducts']));
-// //   dispatch(wishlistApi.util.invalidateTags(['WishlistProducts']));
-  
-// //   // ثالثاً: انقل بعد شوية (الـ token بيتمسح أولاً، فبتحديث الـ UI)
-// //   setTimeout(() => {
-// //     navigate("/login");
-// //   }, 500); // قلل الوقت من 1500 لـ 500 عشان أسرع
-// // };
 
 useEffect(() => {
   const handleClickOutside = (event: MouseEvent) => {
@@ -202,12 +123,7 @@ useEffect(() => {
       setIsMenuOpen(false);
     }
 
-    if (
-      serachRef.current &&
-      !serachRef.current.contains(event.target as Node)
-    ) {
-      setIsSearchOpen(false);
-    }
+  
 
   };
 
@@ -260,7 +176,7 @@ useEffect(() => {
 
   return (
     <motion.nav className="bg-white border-gray-200 font-roobert sticky top-0 z-40">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-3 py-1">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-3 pt-1 pb-4">
         <motion.div
           className="flex items-center space-x-3"
           whileHover={{ scale: 1.05, rotate: 5 }}
@@ -309,7 +225,7 @@ useEffect(() => {
         </div>
 
         <div 
-        ref={serachRef}
+   
         className="flex items-center gap-3 md:gap-6">
           
           <div className="relative hidden md:block">
@@ -365,7 +281,7 @@ useEffect(() => {
           </motion.button>
 
         
-          {userRole === "admin"? null: (
+          {role === "admin"? null: (
             <div className="flex gap-3 items-center mt-2">
             <motion.div
               className="relative"
@@ -375,7 +291,7 @@ useEffect(() => {
               <button onClick={() => navigate("/cart")}>
                 <BsCart4 className="text-3xl text-[#3B8D90] hover:text-[#E8765E] cursor-pointer transition-colors duration-300" />
               </button>
-              {userRole === "user" && cartProducts.length > 0 && (
+              {role === "user" && cartProducts.length > 0 && (
                               <motion.span
                 className="absolute -top-2 -right-2 bg-[#E8765E] text-white text-xs px-1.5 rounded-full "
                 initial={{ scale: 0 }}
@@ -400,7 +316,7 @@ useEffect(() => {
                  className="text-2xl mt-1 text-[#3B8D90] hover:text-[#E8765E] cursor-pointer transition-colors duration-300" />
               </button>
 
-               {userRole === "user" && wishlistLength > 0 && (
+               {role === "user" && wishlistLength > 0 && (
                 <motion.span
                 className="absolute -top-2 -right-2 bg-[#E8765E] text-white text-xs px-1.5 rounded-full "
                 initial={{ scale: 0 }}
@@ -427,7 +343,7 @@ useEffect(() => {
                   >
                     <IoIosArrowDown className="text-sm" />
                     <span className="text-sm font-medium">
-                      {userRole=== "admin" ? "Admin" :`Hi, ${userName?.split(" ")[0] || ""}`}
+                      {role=== "admin" ? "Admin" :`Hi, ${userName?.split(" ")[0] || ""}`}
                       </span>
                   </button>
 
@@ -443,7 +359,7 @@ useEffect(() => {
                         <button
                           onClick={() => {
                             setIsDropdownOpen(false);
-                            if (userRole === "admin") {
+                            if (role === "admin") {
                               navigate("/admin");
                             } else {
                               navigate("/profile");
@@ -452,7 +368,7 @@ useEffect(() => {
                           className="w-full text-left px-4 py-3 text-sm text-[#3B8D90] hover:bg-gray-100 transition-colors duration-200 flex items-center gap-2"
                         >
                           <FaUser className="text-xs" />
-                          {userRole=== "admin" ? "Admin Dashboard" : "My Profile" }
+                          {role=== "admin" ? "Admin Dashboard" : "My Profile" }
                         </button>
                         <button
                           onClick={handleLogout}
@@ -585,7 +501,7 @@ useEffect(() => {
                       size="md"
                       className="w-full"
                       onClick={() => {
-                        if (userRole === "admin") {
+                        if (role === "admin") {
                           navigate("/admin");
                         } else {
                           navigate("/profile");
@@ -593,7 +509,7 @@ useEffect(() => {
                         setIsMenuOpen(false);
                       }}
                     >
-                      {userRole=== "admin" ? "Admin Dashboard" : "My Profile" }
+                      {role=== "admin" ? "Admin Dashboard" : "My Profile" }
                     </Button>
                     <Button
                       variant="apply"

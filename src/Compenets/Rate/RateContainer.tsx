@@ -5,6 +5,8 @@ import RateItem from "./RateItem";
 
 import { useGetOneProductReviewQuery } from "../../app/Features/reviewApi";
 import RenderStars from "../Utility/RenderStars";
+import type { RootState } from "../../app/store";
+import { useSelector } from "react-redux";
 
 interface RateContainerProps {
   productId: string;
@@ -15,6 +17,8 @@ const RateContainer = ({productId}: RateContainerProps) => {
 
   const{data}=useGetOneProductReviewQuery({id:productId,params:{}})
   const reviews=data?.data ??[];
+  const role = useSelector((state: RootState) => state.auth.role);
+
 
 
 
@@ -78,12 +82,12 @@ const RateContainer = ({productId}: RateContainerProps) => {
       :
        <motion.div variants={itemVariants} className="mb-8">
         <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between ">
             <div className="flex items-center gap-4">
               <h2 className="text-2xl font-bold text-gray-800 font-roobert">
                 Reviews
               </h2>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <RenderStars rating={averageRating} />
                 <span className="text-xl font-bold text-gray-800 font-roobert">
                   {averageRating.toFixed(1)}
@@ -97,7 +101,8 @@ const RateContainer = ({productId}: RateContainerProps) => {
         </div>
       </motion.div>
      }
-
+        { role !== "admin" && (
+          
       <motion.div variants={itemVariants}>
        
            <RatePost
@@ -108,6 +113,9 @@ const RateContainer = ({productId}: RateContainerProps) => {
     
        
       </motion.div>
+        )
+
+        }
 
      { reviews.length>0 &&
       <motion.div variants={itemVariants}>

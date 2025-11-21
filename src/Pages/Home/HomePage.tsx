@@ -30,7 +30,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <div className="mt-3">
+      <div >
         <Slider />
       </div>
 

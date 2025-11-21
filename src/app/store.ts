@@ -1,5 +1,5 @@
 import { configureStore, createListenerMiddleware } from "@reduxjs/toolkit";
-import authReducer, { setToken, logout } from "./Features/Slices/authSlice";
+import authReducer, { setToken, logout, setRole } from "./Features/Slices/authSlice";
 import filterReducer from './Features/Slices/filterSlice';
 
 import { categoriesApi } from "./Features/categoriesApi";
@@ -19,21 +19,45 @@ import { ordersApi } from "./Features/ordersApi";
 
 const authListener = createListenerMiddleware();
 
+// authListener.startListening({
+//   actionCreator: setToken,
+//   effect: (action) => {
+//     const token = action.payload;
+//     if (typeof window === "undefined") return;
+//     if (token) localStorage.setItem("token", token);
+//     else localStorage.removeItem("token");
+//   },
+// });
+
 authListener.startListening({
   actionCreator: setToken,
   effect: (action) => {
     const token = action.payload;
     if (typeof window === "undefined") return;
+
     if (token) localStorage.setItem("token", token);
     else localStorage.removeItem("token");
   },
 });
 
 authListener.startListening({
+  actionCreator: setRole,
+  effect: (action) => {
+    const role = action.payload;
+    if (typeof window === "undefined") return;
+
+    if (role) localStorage.setItem("role", role);
+    else localStorage.removeItem("role");
+  },
+});
+
+
+authListener.startListening({
   actionCreator: logout,
   effect: () => {
     if (typeof window === "undefined") return;
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
   },
 });
 

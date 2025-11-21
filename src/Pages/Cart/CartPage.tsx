@@ -16,7 +16,9 @@ import { preload } from "../../utilis/global-preload";
 
 const CartPage = () => {
 
-  const{data,isLoading,isFetching}=useGetCartProductQuery({});
+  const{data,isLoading,isFetching}=useGetCartProductQuery({},{
+   
+  });
   const cartProducts=data?.data?.products??[]
   const totalItems=data?.data?.products.length??0;
   const subtotal=data?.data?.totalCartPrice??0;
@@ -56,7 +58,7 @@ const CartPage = () => {
   };
 
   return (
-    <div className="mt-3" style={{ background: 'linear-gradient(to bottom right, #f9fafb, #ffffff)' }}>
+    <div style={{ background: 'linear-gradient(to bottom right, #f9fafb, #ffffff)' }}>
       <div className="container-custom py-8">
         <motion.div
           className="mb-8"

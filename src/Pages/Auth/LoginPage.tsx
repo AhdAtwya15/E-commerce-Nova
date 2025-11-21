@@ -13,7 +13,7 @@ import notify from "../../hook/useNotification";
 
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useDispatch } from "react-redux";
-import { setToken } from "../../app/Features/Slices/authSlice";
+import { setRole, setToken } from "../../app/Features/Slices/authSlice";
 
 
 const Login = () => {
@@ -39,9 +39,11 @@ const Login = () => {
 
     
         try {
-            const {token} = await loginUser(values).unwrap();
+            const res = await loginUser(values).unwrap();
 
-           dispatch(setToken(token));
+      
+           dispatch(setToken(res.token));
+dispatch(setRole(res.data.role));
             notify("Welcome to Nova !","success")
             setTimeout(() => {
                

@@ -218,6 +218,7 @@ const AddAddressForm = ({ addressToEdit, onCancelEdit }: AddAddressFormProps) =>
         transition={{ duration: 0.5, delay: 0.8 }}
       >
         <Button
+        className="whitespace-nowrap"
           type="submit"
           variant="addBtn"
           size="md"
@@ -229,6 +230,7 @@ const AddAddressForm = ({ addressToEdit, onCancelEdit }: AddAddressFormProps) =>
         {addressToEdit && (
           <Button
             type="button"
+            variant="cancel"
            
             size="md"
             onClick={handleCancel}

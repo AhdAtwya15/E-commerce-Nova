@@ -4,8 +4,36 @@ import { FaInstagram, FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa
 import { MdLocalShipping, MdCardGiftcard, MdAccessTime } from "react-icons/md";
 import { SiGmail } from "react-icons/si";
 import { FaWhatsapp } from "react-icons/fa";
+import type { INavPages } from "../../Interfaces";
+import { NavLink, useNavigate } from "react-router-dom";
+import { preload } from "../../utilis/global-preload";
 
 const Footer = () => {
+
+  const footerLinks: INavPages[] = [
+
+  { text: "About Us",
+    path: "/about",
+    importFn: () => import("../../Pages/About/AboutPage")
+     },
+  { text: "Products",
+    path: "/products",
+  importFn: () => import("../../Pages/Product/ShowProductsPage"),
+},
+ { text: "Categories", 
+    path: "/categories",
+    importFn: () => import("../../Pages/Categories/CategoriesPage"),
+   },
+  { text: "Brands",
+    path: "/brands",
+    importFn: () => import("../../Pages/Brands/BrandsPage")
+     },
+ 
+];
+const navigate=useNavigate()
+
+
+  
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -140,19 +168,26 @@ const Footer = () => {
               className="space-y-3"
               variants={itemVariants}
             >
-              {['About Us', 'Products', 'Categories', 'Brands', 'Contact'].map((link) => (
+              {footerLinks.map((link,index) => (
                 <motion.li
-                  key={link}
+                  key={index}
                   whileHover={{ x: 5 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <a
-                    href="#"
-                    className="text-gray-600 hover:text-[#3B8D90] transition-colors duration-300 flex items-center group"
-                  >
-                    <span className="w-2 h-2 bg-[#E8765E] rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
-                    {link}
-                  </a>
+                  <NavLink
+                to={link.path}
+                 onMouseEnter={() => preload(link.importFn)}
+                                onClick={(e) => {
+                    e.preventDefault();         
+                    preload(link.importFn);      
+                    navigate(link.path);     }}
+                end
+                className="text-gray-600 hover:text-[#3B8D90] transition-colors duration-300 flex items-center group"
+                
+              >
+                 <span className="w-2 h-2 bg-[#E8765E] rounded-full mr-3 group-hover:scale-150 transition-transform duration-300"></span>
+                {link.text}
+              </NavLink>
                 </motion.li>
               ))}
             </motion.ul>

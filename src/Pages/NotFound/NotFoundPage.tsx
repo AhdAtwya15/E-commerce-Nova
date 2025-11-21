@@ -20,7 +20,7 @@ const NotFoundPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white font-roobert mt-3">
+    <div className="min-h-screen bg-white font-roobert ">
       <motion.section
         className="relative text-white py-32 px-4 overflow-hidden"
         initial={{ opacity: 0 }}

@@ -44,7 +44,7 @@ const SuccessPage = React.lazy(() => import("../Pages/Success/SuccessPage"));
 
 const Router = createBrowserRouter([
   {
-    path: "/success/:id",
+    path: "/success",
     element: <SuccessPage />,
   },
   {

@@ -140,7 +140,7 @@ const PaymentMethodPage = () => {
       notify("Order placed successfully!", "success");
    
       
-      navigate(`/success/${cartId}`);
+      navigate(`/success`);
 
     }
       

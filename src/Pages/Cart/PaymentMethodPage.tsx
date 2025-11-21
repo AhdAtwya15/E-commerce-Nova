@@ -147,7 +147,6 @@ const PaymentMethodPage = () => {
     } catch (error) {
       console.error("Order placement error:", error);
       
-      // معالجة أفضل للأخطاء
       if (error && typeof error === "object" && "data" in error) {
         const err = error as { data?: { message?: string } };
         notify(err.data?.message || "Failed to place order", "error");
